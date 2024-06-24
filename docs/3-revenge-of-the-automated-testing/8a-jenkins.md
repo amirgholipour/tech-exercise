@@ -18,17 +18,22 @@
     git push
     ```
 
+    <p class="warn">If you get an error like <b>error: failed to push some refs to..</b>, please run <b><i>git pull</i></b>, then push your changes again by running above commands.</p>    
+
 2. Add a new stage into Jenkinsfile with cosign steps. Image signing should run after image build. Copy the below block into the right placeholder:
 
     ```groovy
             // 🔏 IMAGE SIGN EXAMPLE GOES HERE
             stage("🔏 Image Signing") {
-                agent { label "jenkins-agent-cosign" }
+                agent { label "jenkins-agent-cosign" }           
+                options {
+                        skipDefaultCheckout(true)
+                }
                 steps {
                     script {
                         sh '''
                         oc registry login
-                        cosign sign -key k8s://${TEAM_NAME}-ci-cd/${TEAM_NAME}-cosign `oc registry info`/${DESTINATION_NAMESPACE}/${APP_NAME}:${VERSION}
+                        cosign sign --key k8s://${TEAM_NAME}-ci-cd/${TEAM_NAME}-cosign `oc registry info`/${DESTINATION_NAMESPACE}/${APP_NAME}:${VERSION} --allow-insecure-registry
                         '''
                     }
                 }
@@ -48,26 +53,26 @@
     🪄 Observe the **pet-battle** pipeline running with the **image-sign** stage.
     ![cosign-jenkins-pipeline](images/cosign-jenkins-pipeline.png)
 
-    After the pipeline succesfully finish, go to OpenShift UI > Builds > ImageStreams inside `<TEAM_NAME>-test` namespace and select `pet-battle`. You'll see a tag ending with `.sig` which shows you that this is image signed.
+    After the pipeline succesfully finish, in the `Administrator` view, go to OpenShift UI > Builds > ImageStreams inside `<TEAM_NAME>-test` namespace and select `pet-battle`. You'll see a tag ending with `.sig` which shows you that this is image signed.
 
     ![cosign-image-signing-pet-battle](images/cosign-image-signing-pet-battle.png)
 
-4. Let's verify the signed image with the public key. Make sure you use the right `APP VERSION` for the image. (`1.3.1` in this case)
+4. Let's verify the signed image with the public key. Make sure you use the right `APP VERSION` for the image. (`1.2.0` in this case)
 
     ```bash
     cd /projects/pet-battle
     oc registry login $(oc registry info) --insecure=true
-    cosign verify --key k8s://<TEAM_NAME>-ci-cd/<TEAM_NAME>-cosign default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle:1.3.1
+    cosign verify --key k8s://<TEAM_NAME>-ci-cd/<TEAM_NAME>-cosign default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle:1.2.0 --allow-insecure-registry --insecure-ignore-tlog
     ```
 
     The output should be like:
 
     <div class="highlight" style="background: #f7f7f7">
     <pre><code class="language-bash">
-    Verification for default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle:1.3.1 --
+    Verification for default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle:1.2.0 --
     The following checks were performed on each of these signatures:
     - The cosign claims were validated
     - The signatures were verified against the specified public key
     - Any certificates were verified against the Fulcio roots.
-    {"critical":{"identity":{"docker-reference":"default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle"},"image":{"docker-manifest-digest":"sha256:0ed4731d77bc2412079c85c6bc40f19c0a1615b9574cc3e7a7005910740248de"},"type":"cosign container image signature"},"optional":null}
+    {"critical":{"identity":{"docker-reference":"default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle"},"image":{"docker-manifest-digest":"sha256:7fac63583149068a11d6f2233dcc64e80bac50b1e6698b07f4d3ddfd68f50022"},"type":"cosign container image signature"},"optional":null}
     </code></pre></div>

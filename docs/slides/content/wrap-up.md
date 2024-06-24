@@ -10,8 +10,11 @@ TL500 <!-- {.element: class="title-color"} -->
 
 
 
-### Team WtW 
-In your table groups, run a mini Walk the Walls session just like we did each morning. Pick the practices you've created throughout the week and discuss them in your teams.
+### Team Walk the Walls 
+#### Pet Battle Industries
+In your table groups, run a mini Walk the Walls session, just like we did each morning. 
+
+Pick the practices that you have created throughout the week and discuss them in your teams.
 
 
 
@@ -24,15 +27,20 @@ With only the items in the bags given to you by your instructor, recreate as man
 
 
 ## The Open Practice Library 🌀
-[> slide deck](https://rht-labs.com/tech-exercise/slides/content/?name=open-practice-library)
+[> Slide Deck](https://rht-labs.com/tech-exercise/slides/content/?name=open-practice-library)
+
+
+
+#### The Last Unicorn Developer
+[The Last Unicorn Developer](http://rht-labs.com/StarWarsIntroCreator/#!/AN-PpWgIVFQMee1wAWI_)
 
 
 
 ### _Lean Coffee_ or _Tech Mobbing_
-#### Choose your fighter for the next hour :P
+#### Choose your fighter for the next hour
 
-* Lean Coffee ☕☕ - Take the Car Park, your coffee and any other burning questions to the lean coffee event. Topics will be voted and discussed within a timebox.
-* Tech Mobbing 👩‍💻👨‍💻 - Continue working through the tech exercise as a group and have an open chat about all things techie
+* Lean Coffee ☕☕ - Take the Car Park, your coffee, and any other burning questions to the lean coffee event. Topics will be voted and discussed within a time box.
+* Tech Mobbing 👩‍💻👨‍💻 - Continue working through the tech exercise as a group and have an open chat about all things techie.
 
 ![choose-your-fighter](https://i.ytimg.com/vi/qi0ohQSdx9I/hqdefault.jpg)
 
@@ -44,7 +52,7 @@ With only the items in the bags given to you by your instructor, recreate as man
 
 ### What did we do?
 * Team Forming
-* Discovery, Delivery, Foundational practices
+* Discovery, Delivery, and Foundational practices
 * Hands-on technical exercises
 * Built two visualizations useful for any project
   * Practice Corner
@@ -61,10 +69,9 @@ With only the items in the bags given to you by your instructor, recreate as man
 #### _What is it?_
 * An event where stakeholders and interested parties are given a demonstration of
 recent work performed by a team
-* The latest increment of the product with new features built by the team is
-showcased
+* The latest increment of the product is showcased with new features built by the team
 * Provides an opportunity to review culture and practices used by the team
-* It is often performed at the end of an iteration but can be performed at key
+* It is often performed at the end of an iteration, but can be performed at key
 milestones in the life of the product
 
 
@@ -73,35 +80,32 @@ milestones in the life of the product
 #### _Why use it?_
 The showcase provides a critical feedback loop for products being incrementally
 and iteratively built. Stakeholders can give feedback on the features as they
-are being built, suggest improvements, give ideas for new features, and catch
+are developed, suggest improvements, give ideas for new features, and catch
 problems early. <!--{.element: style="font-size: smaller; font-weight: 400;"} -->
 
 #### _Other benefits_
 * Provides an open forum for channeling feedback from stakeholders to product
-leadership so that prioritization and future work can be adapted accordingly
+leadership so that priorities and future work can be adapted accordingly
 * Enables collaboration across all interested parties on a regular basis
 
 
 
 ### Demo Day
 #### _What is Demo Day about?_
-* Demo Day is the culmination of a trip around the Practice Loop
-* It is an opportunity for the team to showcase their work from a particular
-time period
-* An opportunity for key stakeholders to see the results
-* May have had many showcases or product increments completed feeding this
-* An opportunity to talk about "what's next" and how do to adapt the culture for
-the next round
-* An opportunity to celebrate!
+* Demo Day is the culmination of a trip around the Practice Loop.
+* There will be several showcases or product increments that feed into the demo day.
+* The team can showcase their work from a particular time period.
+* Key stakeholders get to see the results.
+* Provides an opportunity to discuss "what's next" and how do to adapt the team culture for the next round.
+* A celebration !
 
 
 
 ### Demo Day
 #### _Tips_
-* "Show" NOT "tell"
-* Take the opportunity to drive excitement around the product **and** culture
-* The demo should include not just the product of a sprint or release but of
-the **culture** and **philosophy** used to produce it
+* "Show" NOT "Tell"
+* Take this opportunity to drive excitement around the product **and** culture.
+* The demo should include not only the product of a sprint or release, but also the **culture** and **philosophy** used to produce it.
 
 
 
@@ -111,19 +115,19 @@ the **culture** and **philosophy** used to produce it
 
 
 ### Exercise A: The Successful Demo Day 
-#### In teams, take some time to brainstorm:
-* What have you taken away from this week's set of sessions and activities:
-  * People, processes **and** technology
+#### In teams, take some time to brainstorm
+* What have you taken away from this week's set of sessions and activities?
+  * People, processes, **and** technology
 * What did you learn about your team, class, or instructors?
 * What did you enjoy?
 
 
 
-### Exercise B: The Success Factors and the Anti Patterns
-#### In teams, take some time to brainstorm:
+### Exercise B: The Success Factors and the Anti-Patterns
+#### In teams, take some time to brainstorm
 * Demo Day - What are the things you would bring and show during a Demo Day?
-* Success Factors - What are things or people who could help drive this new way of working and help with adoption
-* Anti Patterns - What are the things that would hinder us or prevent us from succeeding? 
+* Success Factors - What are things or people who could help drive this new way of working and help with adoption?
+* Anti-Patterns - What are the things that would hinder you or prevent you from succeeding? 
 
 
 
@@ -137,14 +141,14 @@ the **culture** and **philosophy** used to produce it
 
 
 ### Call to Action
-* Use what you have learned
-* Reach out to your classmates and instructors
-* Use the resources shared during the class
-* Get yourself a copy of `DevOps Culture and Practice with OpenShift` 💰💰
+* Use what you have learned.
+* Reach out to your classmates and instructors.
+* Use the resources shared during the class.
+* Download a copy of `DevOps Culture and Practice with OpenShift` ebook.💰💰
 
 
 
-#### 📗🐛 Get yourself a copy of our Bookie Wookie 🍪🍪
+#### 📗🐛 Get a copy of our Bookie Wookie 🍪🍪
 
 ![bookie-wookie](images/wrap-up/book.png)<!-- {.element: class="" style="max-height: 600px!important;" } -->
 
@@ -156,7 +160,9 @@ the **culture** and **philosophy** used to produce it
 * GitHub repository: https://github.com/rht-labs/tech-exercise
 * Open Practice Library: https://openpracticelibrary.com/
 * Ubiquitous Journey🔥🦄: https://github.com/rht-labs/ubiquitous-journey
-* DevOps Culture and Practice with OpenShift book ([chapters ebooks](https://www.redhat.com/en/engage/devops-culture-practice-openshift-ebooks), [physical book](https://www.packtpub.com/product/devops-culture-and-practice-with-openshift/9781800202368) on Pack editor or Amazon)
+* DevOps Culture and Practice with OpenShift book
+  * Download the [ebook chapters](https://www.redhat.com/en/engage/devops-culture-practice-openshift-ebooks)
+  * You can obtain the [physical book](https://www.packtpub.com/product/devops-culture-and-practice-with-openshift/9781800202368) on Pack editor or Amazon
 
 
 

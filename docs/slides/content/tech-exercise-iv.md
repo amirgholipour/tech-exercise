@@ -23,23 +23,7 @@ TL500 <!-- .element: class="title-color" -->
 
 
 ### Tech Exercise IV
-[Return of the Monitoring](https://starwarsintrocreator.kassellabs.io/?ref=redirect#!/BL_hsikixFsVbDNyZ28h)
-
-
-
-##### The Big Picture <!-- .element: class="title-bottom-left" -->
-<!-- .slide: data-background-size="contain" data-background-image="https://rht-labs.com/tech-exercise/4-return-of-the-monitoring/images/big-picture-monitoring.jpg", class="white-style" -->
-
-
-
-#### 🧑‍🏫 Learning outcomes 🧑‍💻
-As a learner, by the end of this exercise I ...
-* can add ServiceMonitor for apps to gather metrics
-* can query Prometheus to see metrics
-* can create alerts with PrometheusRule
-* can install Grafana create dashboards with it
-* can create search index in Kibana
-
+[Return of the Monitoring](http://rht-labs.com/StarWarsIntroCreator/#!/AN-PnnCgCljRjZ-cOGBI)
 
 
 
@@ -117,7 +101,7 @@ From system’s perspective:
 #### _SLIs for Pet Battle_
 - Request to access Pet Battle complete successfully
 - Proportion of access requests that were served are < 150ms (a time-based measurement)
-- Database is always have 20% available space
+- Database must always have 20% available space
 
 We defined what to measure to track our users' happiness. Next step is to decide the best place to collect data for it (_which we will do during this tech exercise_).
 
@@ -145,9 +129,25 @@ _It is important that SLOs are documentated and iterate over time._
 
 
 #### Error Budgets
-Now that we have SLOs defined for Pet Battle - next step is deciding what to do when we don’t meet with them. We define SLOs as a way to make sure that our services are reliable enough for our endusers. When our measurements show if we are not reliabile enough - now what?
+Now that we have SLOs defined for Pet Battle - next step is deciding what to do when we don’t meet with them. We define SLOs as a way to make sure that our services are reliable enough for our endusers. When our measurements show if we are not reliable enough - now what?
 
 Let's discuss what would you do if you don't meet with SLOs?
+
+
+
+#### 🧑‍🏫 Learning outcomes 🧑‍💻
+As a learner, by the end of this exercise I ...
+* can add ServiceMonitor for apps to gather metrics
+* can query Prometheus to see metrics
+* can create alerts with PrometheusRule
+* can install Grafana create dashboards with it
+* can create search index in Kibana
+
+
+
+##### The Big Picture <!-- .element: class="title-bottom-left" -->
+<!-- .slide: data-background-size="contain" data-background-image="https://rht-labs.com/tech-exercise/4-return-of-the-monitoring/images/big-picture-monitoring.jpg", class="white-style" -->
+
 
 
 
@@ -198,7 +198,7 @@ _We will use **Fluentd** to collect logs, **ElasticSearch** to store them and **
 
 
 
-<!-- .slide: data-background-image="images/chef-background.png", class="white-style" -->
+<!-- .slide: data-background-image="images/book-background.jpeg", class="black-style"  data-background-opacity="0.3" -->
 ### Related & Used Practices
 * [Observability](https://openpracticelibrary.com/practice/observability)
 * [The Big Picture](https://openpracticelibrary.com/practice/teh-big-picture)

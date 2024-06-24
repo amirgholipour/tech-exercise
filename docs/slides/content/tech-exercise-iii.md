@@ -1,7 +1,7 @@
 <!-- .slide: data-background-image="images/RH_NewBrand_Background.png" -->
 ### DevOps Culture and Practice <!-- .element: class="course-title" -->
 ## Tech Exercise III <!-- .element: class="title-color" -->
-### Automate all the Testings <!-- .element: class="title-color" -->
+### Automate All the Testing <!-- .element: class="title-color" -->
 TL500 <!-- .element: class="title-color" -->
 
 
@@ -22,24 +22,12 @@ TL500 <!-- .element: class="title-color" -->
 
 
 ### Tech Exercise III
-[Revenge of the Automated Testing](https://starwarsintrocreator.kassellabs.io/?ref=redirect#!/BL_hsikixFsVbDNyZ28h)
+[Revenge of the Automated Testing](http://rht-labs.com/StarWarsIntroCreator/#!/AN-Pm81Gmfs0g0ioQHfw)
 
 
 
-##### The Big Picture <!-- .element: class="title-bottom-left" -->
-<!-- .slide: data-background-size="contain" data-background-image="https://rht-labs.com/tech-exercise/3-revenge-of-the-automated-testing/images/big-picture-pipeline-complete.jpg", class="white-style" -->
-
-
-
-#### 🧑‍🏫 Learning outcomes 🧑‍💻
-As a learner, by the end of this exercise I ...
-* Can add security gates to pipeline
-* Can add testing gates to pipeline
-* Can add static code analysis gates to pipeline
-* Can add image signing to the pipeline
-* Can add load testing to the pipeline
-<!--
---->
+### Tech Exercise III - Extended Edition 
+[A Secure Hope](http://rht-labs.com/StarWarsIntroCreator/#!/AN-Pmtuc82D6y3UWPCWq)
 
 
 
@@ -48,7 +36,7 @@ AUTOMATE ALL THE THINGS 💥🔨
 * Unit Tests & Integration tests
 * Static Code Analysis
 * Configurations and policy checks
-* Security (dependencies, vulnerabilities and pen tests)
+* Security (dependencies, vulnerabilities. and pen tests)
 
 
 
@@ -58,17 +46,34 @@ AUTOMATE ALL THE THINGS 💥🔨
 
 
 #### Measuring Test
-Answering the age old question of how do i know my tests are any good??
 ![test-measuers](images/tech-exercise-iii/measuring-tests.png)
+Answering the age old question, "How do I know if my tests are any good?"
 * Code Coverage
 * Static Code Analysis
 
 
 
 #### Why do it?
-* Improved quality - applying patterns like TDD or BDD drive up shared understanding
-* Deliver reliably at speed - as features are produced you can confidently release without a large manual regression each time
-* Fewer bottlenecks - without automated tests, queues form in front of testers
+* Improved quality: Applying patterns like TDD or BDD drives up shared understanding
+* Deliver reliably at speed: As features are produced, you can confidently release without a large manual regression each time
+* Fewer bottlenecks: Without automated tests, queues form in front of testers
+
+
+
+#### 🧑‍🏫 Learning Outcomes 🧑‍💻
+As a learner, I can perform the following tasks by the end of this exercise:
+* Add security gates to the pipeline
+* Add testing gates to the pipeline
+* Add static code analysis gates to the pipeline
+* Add image signing to the pipeline
+* Add load testing to the pipeline
+<!--
+--->
+
+
+
+##### The Big Picture <!-- .element: class="title-bottom-left" -->
+<!-- .slide: data-background-size="contain" data-background-image="https://rht-labs.com/tech-exercise/3-revenge-of-the-automated-testing/images/big-picture-pipeline-complete.jpg", class="white-style" -->
 
 
 
@@ -81,17 +86,17 @@ Answering the age old question of how do i know my tests are any good??
 
 
 
-### 💥 Prioritise your work 💥 <!-- .element: class="title-bottom-left" -->
+### 💥 Prioritize your work 💥 <!-- .element: class="title-bottom-left" -->
 <!-- .slide: data-background-size="contain" data-background-image="images/tech-exercise-iii/priority-matrix.png", class="black-style" data-background-opacity="1"	 -->
 
 
 
-### 💥 Prioritise your work 💥 <!-- .element: class="title-bottom-left" -->
+### 💥 Prioritize your work 💥 <!-- .element: class="title-bottom-left" -->
 <!-- .slide: data-background-size="contain" data-background-image="images/tech-exercise-iii/impact-effort.png", class="black-style" data-background-opacity="1"	 -->
 
 
 
-### 💥 Prioritise your work 💥 <!-- .element: class="title-bottom-left" -->
+### 💥 Prioritize your work 💥 <!-- .element: class="title-bottom-left" -->
 <!-- .slide: data-background-size="contain" data-background-image="images/tech-exercise-iii/how-now-wow.png", class="black-style" data-background-opacity="1"	 -->
 
 
@@ -104,6 +109,8 @@ Answering the age old question of how do i know my tests are any good??
 #### 💥 Tech Exercise 💥
 * In mobs / pairs work through your tasks
 * If in pairs, continuously playback what you accomplish to the others
+<!--TechEdit: I commented on this "playback" verbiage in another section. It's an odd term without a clear meaning to me. In the previous instance it seemed to mean "read aloud", but not sure if that makes sense in this context because I'm not sure what the instruction means. 
+I assume the tasks will be obvious or assigned (although this is vague), but the second bullet - "in pairs, continuously playback (review? read out?) to what others? If I'm in a pair, then there ar only two of us, right? Please clarify-->
 
 
 
@@ -112,7 +119,7 @@ Answering the age old question of how do i know my tests are any good??
 
 
 #### Feedback
-* Q&A
+* Q & A
 * Real World Stories
 * Pull Requests Welcome 🦄
 
@@ -123,7 +130,7 @@ Answering the age old question of how do i know my tests are any good??
 
 
 
-#### Sam's Code - Strikes back 🕺 <!-- .element: class="title-bottom-left" -->
+#### Sam's Code - Strikes Back 🕺 <!-- .element: class="title-bottom-left" -->
 <!-- .slide: data-background-size="contain" data-background-image="images/tech-exercise-iii/sams-code2.jpg", class="black-style" data-background-opacity="1"	 -->
 
 
@@ -133,6 +140,9 @@ Answering the age old question of how do i know my tests are any good??
 
 
 
-<!-- .slide: data-background-image="images/chef-background.png", class="white-style" -->
+<!-- .slide: data-background-image="images/book-background.jpeg", class="black-style"  data-background-opacity="0.3" -->
 ### Related & Used Practices
-- [](https://openpracticelibrary.com/practice/) - 
+- [Test automation](https://openpracticelibrary.com/practice/test-automation/)
+- [Impact & Effort Prioritization (Matrix)](https://openpracticelibrary.com/practice/impact-effort-prioritization-matrix/)
+- [How-Now-Wow Prioritization (Matrix)](https://openpracticelibrary.com/practice/how-now-wow-prioritization-matrix/)
+- [Kanban](https://openpracticelibrary.com/practice/kanban/)

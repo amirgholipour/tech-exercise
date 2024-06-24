@@ -8,9 +8,11 @@ Continuous Delivery needs rapid and reliable feedback. Investing in continuous t
 
 **💥 Choose your own adventure 💥**
 
-There are lots of things we can do under the heading of `Quality Gates`, so decide for yourselves what you'd like to do. In your table groups, create a Kanban with each of the exercise titles. Discuss among yourselves the order you'd like to do them in and as mobs / pairs, take tasks from the list and implement them. At the end of each section, play back to the other group what you've accomplished. Then grab the next priortized item on your list!
+There are lots of things we can do under the heading of `Quality Gates`, so decide for yourselves what you'd like to do. In your table groups, create a Kanban with each of the exercise titles. Discuss among yourselves the order you'd like to do them in and as mobs / pairs, take tasks from the list and implement them. At the end of each section, play back to the other group what you've accomplished. Then grab the next prioritized item on your list!
 
 ![team-kanban](images/team-kanban.jpg)
+
+To onboard a new group in your team, follow this [guide](98-a-new-group/README.md).
 
 ## 🖼️ Big Picture
 
@@ -22,6 +24,7 @@ There are lots of things we can do under the heading of `Quality Gates`, so deci
 - [ ] Can add testing gates to pipeline
 - [ ] Can add static code analysis gates to pipeline
 - [ ] Can add image signing to the pipeline
+- [ ] Can generate and store SBOMs
 - [ ] Can add load testing to the pipeline
 
 ## 🔨 Tools used in this exercise!
@@ -33,5 +36,6 @@ There are lots of things we can do under the heading of `Quality Gates`, so deci
 * <span style="color:blue;">[ZAP - OWASP](https://owasp.org/www-project-zap)</span> application scanning to check for common attack patterns
 * Image Security - <span style="color:blue;">[StackRox](https://www.stackrox.com)</span> - Finding vulnerabilities inside the images and hosts with StackRox
 * Image Signing - <span style="color:blue;">[sigstore](https://www.sigstore.dev)</span> - Sign your images with cosign
+* SBOMs - <span style="color:blue;">[Syft](https://github.com/anchore/syft)</span> - Generate a Software Bill of Materials (SBOM) from container images
 * Load Testing - <span style="color:blue;">[locust](https://docs.locust.io/en/stable/index.html)</span> - Automated load tests in your pipeline
 * System Test - test the system before promoting to the next stage

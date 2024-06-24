@@ -10,15 +10,17 @@
 
 StackRox / Advanced Cluster Security (ACS) is deployed once at the cluster scope. It can be used to monitor multiple clusters. The ACS/StackRox operator is already deployed and configured in the cluster for you.
 
-1. Connect to the ACS WebUI Route using the **admin** credentials:
+1. Connect to the ACS WebUI Route:
 
     ```bash
     # get web url
     echo https://$(oc -n stackrox get route central --template='{{ .spec.host }}')
     ```
 
+    Using the **admin** username:
+
     ```bash
-    # get credentials
+    # get password to go with the "admin" username:
     echo $(oc -n stackrox get secret central-htpasswd -o go-template='{{index .data "password" | base64decode}}')
     ```
 
@@ -105,23 +107,27 @@ StackRox / Advanced Cluster Security (ACS) is deployed once at the cluster scope
     git push
     ```
 
-5. As a team we are going to update a *Build* policy that we will use later in the exercise. Browse to the *Platform Configuration -> System Policies* view. Type in *Policy* and then *secure shell*, select the **Secure Shell (ssh) Port Exposed in Image** policy.
+5. As a team we are going to update a *Build* policy that we will use later in the exercise. Browse to the *Platform Configuration -> Policy Management* view. Type in *Policy* and then *secure shell*, select the **Secure Shell (ssh) Port Exposed in Image** policy.
 
     ![images/acs-find-policy.png](images/acs-find-policy.png)
 
-6. Clone this Policy so we can edit it, give it a new name.
+6. Clone this Policy by clicking three dots on the right so we can edit it, give it a new name.
 
     ![images/acs-clone-policy.png](images/acs-clone-policy.png)
 
-7. Click *Next* and add **22** to the regular expression for *Arguments* in the disallowed Dockerfile line.
+7. Click *Next* until we reach **Policy Behaviour**. Select **Inform and enforce** and configure the **Build** behaviour to **Enforce on Build**. This will fail the build if the policy conditions are matched.
+
+    ![images/acs-policy-behaviour.png](images/acs-policy-behaviour.png)
+
+8. Click *Next* until we reach **Policy Criteria**. Add **22** to the regular expression for *Arguments* in the disallowed Dockerfile line.
 
     ![images/acs-policy-criteria.png](images/acs-policy-criteria.png)
 
-8. Hit *Next* and *Next* and turn **ON** policy enforcement at *Build* time.
+9. Hit *Next* and *Next* until you reach **Review Policy**, check the policy enforcement is enabled at *Build* time.
 
     ![images/acs-policy-enforcement.png](images/acs-policy-enforcement.png)
 
-9. *Save* the policy. It should look like this now.
+10. *Save* the policy. It should look like this now.
 
     ![images/acs-policy-done.png](images/acs-policy-done.png)
 

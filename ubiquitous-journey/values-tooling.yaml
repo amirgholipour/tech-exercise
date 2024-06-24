@@ -7,25 +7,26 @@ applications:
     source_ref: "1.0.1"
     values:
       serviceaccounts: ""
-      bindings: &binds # student is the GROUP NAME in IDM
+      # student is the GROUP NAME in IDM
+      bindings: &binds
         - name: student
           kind: Group
-          role: edit
+          role: admin
         - name: jenkins
           kind: ServiceAccount
           role: admin
-          namespace: <TEAM_NAME>-ci-cd
+          namespace: TEAM_NAME-ci-cd
       namespaces:
-        - name: <TEAM_NAME>-ci-cd
-          bindings: *binds
-          operatorgroup: false
-        - name: <TEAM_NAME>-dev
+        - name: TEAM_NAME-ci-cd
           bindings: *binds
           operatorgroup: true
-        - name: <TEAM_NAME>-test
+        - name: TEAM_NAME-dev
           bindings: *binds
           operatorgroup: true
-        - name: <TEAM_NAME>-stage
+        - name: TEAM_NAME-test
+          bindings: *binds
+          operatorgroup: true
+        - name: TEAM_NAME-stage
           bindings: *binds
           operatorgroup: true
 
@@ -34,7 +35,7 @@ applications:
     enabled: true
     source: https://github.com/redhat-cop/helm-charts.git
     source_path: charts/jenkins
-    source_ref: "jenkins-1.0.6"
+    source_ref: "jenkins-1.0.10"
     values:
       buildconfigs:
         # Jenkins S2I from Red Hat Labs
@@ -45,7 +46,7 @@ applications:
           source_context_dir: '/'
           builder_image_kind: "DockerImage"
           builder_image_name: quay.io/openshift/origin-jenkins
-          builder_image_tag: "latest"
+          builder_image_tag: "4.12"
         # Jenkins agents for running builds etc
         # default names, versions, repo and paths set on the template
         - name: jenkins-agent-npm
@@ -60,6 +61,10 @@ applications:
             value: ''
           - name: GITLAB_GROUP_NAME
             value: ''
+          - name: GIT_SSL_NO_VERIFY
+            value: "true"
+          - name: JAVA_ARGS
+            value: '-Dorg.jenkinsci.plugins.gitclient.GitClient.untrustedSSL=true'
       persistence: false
       source_secrets:
         - name: nexus-password
@@ -71,7 +76,7 @@ applications:
 
   # Sealed Secrets
 
-  
+
   # Tekton Pipelines
 
 
@@ -85,3 +90,5 @@ applications:
 
 
   # Matomo
+
+  # Zalenium

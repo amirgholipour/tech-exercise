@@ -25,13 +25,13 @@
         - name: COSIGN_VERSION
           type: string
           description: Version of cosign CLI
-          default: 1.0.0
+          default: 2.0.2
         - name: WORK_DIRECTORY
           description: Directory to start build in (handle multiple branches)
           type: string
       steps:
         - name: image-signing
-          image: quay.io/openshift/origin-cli:4.9
+          image: quay.io/openshift/origin-cli:4.12
           workingDir: $(workspaces.output.path)/$(params.WORK_DIRECTORY)
           script: |
             #!/usr/bin/env bash
@@ -39,7 +39,7 @@
             chmod -R 775 /tmp/cosign
 
             oc registry login
-            /tmp/cosign sign -key k8s://$(params.TEAM_NAME)-ci-cd/$(params.TEAM_NAME)-cosign `oc registry info`/$(params.TEAM_NAME)-test/$(params.APPLICATION_NAME):$(params.VERSION)
+            /tmp/cosign sign --key k8s://$(params.TEAM_NAME)-ci-cd/$(params.TEAM_NAME)-cosign `oc registry info`/$(params.TEAM_NAME)-test/$(params.APPLICATION_NAME):$(params.VERSION) --allow-insecure-registry
     EOF
     ```
 
@@ -88,7 +88,7 @@
 
     🪄 Observe the **pet-battle-api** pipeline running with the **image-sign** task.
 
-    After the task succesfully finish, go to OpenShift UI > Builds > ImageStreams and select `pet-battle-api`. You'll see a tag ending with `.sig` which shows you that this is image signed. 
+    After the task successfully finish, in the `Administrator` view, go to OpenShift UI > Builds > ImageStreams and select `pet-battle-api`. You'll see a tag ending with `.sig` which shows you that this is image signed. 
 
     ![cosign-image-signing](images/cosign-image-signing.png)
 
@@ -97,7 +97,7 @@
     ```bash
     cd /projects/pet-battle-api
     oc registry login $(oc registry info) --insecure=true
-    cosign verify --key k8s://<TEAM_NAME>-ci-cd/<TEAM_NAME>-cosign default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle-api:1.3.1
+    cosign verify --key k8s://<TEAM_NAME>-ci-cd/<TEAM_NAME>-cosign default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle-api:1.3.1 --allow-insecure-registry --insecure-ignore-tlog
     ```
 
     The output should be like:
@@ -109,5 +109,5 @@
       - The cosign claims were validated
       - The signatures were verified against the specified public key
       - Any certificates were verified against the Fulcio roots.
-    {"critical":{"identity":{"docker-reference":"default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle-api"},"image":{"docker-manifest-digest":"sha256:ec332c568ef608b6f1d2d179d9ac154523fbe412b4f893d76d49d267a7973fea"},"type":"cosign container image signature"},"optional":null}
+    {"critical":{"identity":{"docker-reference":"default-route-openshift-image-registry.<CLUSTER_DOMAIN>/<TEAM_NAME>-test/pet-battle-api"},"image":{"docker-manifest-digest":"sha256:1545e1d2cf0afe5df99fe5f1d39eef8429a2018c3734dd3bdfcac5a068189e39"},"type":"cosign container image signature"},"optional":null}
     </code></pre></div>

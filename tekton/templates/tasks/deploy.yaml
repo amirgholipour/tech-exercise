@@ -1,5 +1,5 @@
 ---
-apiVersion: tekton.dev/v1alpha1
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: deploy
@@ -35,7 +35,7 @@ spec:
     - name: PREVIOUS_VERSION
       description: Version of currently running app
   steps:
-    - name: get-current-into
+    - name: get-current-info
       workingDir: $(workspaces.output.path)/$(params.WORK_DIRECTORY)
       image: quay.io/redhat-cop/tekton-task-helm:3.6.3
       script: |
@@ -61,6 +61,7 @@ spec:
         git config --global user.email "tekton@rht-labs.bot.com"
         git config --global user.name "🐈 Tekton 🐈"
         git config --global push.default simple
+        git config --global --add safe.directory '*'
         git checkout main
         git add $(params.DEPLOY_ENVIRONMENT)/values.yaml
         git commit -m "🚀 AUTOMATED COMMIT - Deployment of $(params.APPLICATION_NAME) at version $(params.VERSION) 🚀" || rc=$?

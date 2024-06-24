@@ -22,32 +22,35 @@ When something is seen as not matching the required state in Git, an application
 
 1. To get started with ArgoCD, we've written a Helm Chart to deploy an instance of ArgoCD to the cluster. On your terminal (in the IDE), add the redhat-cop helm charts repository. This is a collection of charts curated by consultants in the field from their experience with customers. Pull requests are welcomed :P
 
-    ```bash
+    ```bash#test
     helm repo add redhat-cop https://redhat-cop.github.io/helm-charts
     ```
 
 2. We are using the [Red Hat GitOps Operator](https://github.com/redhat-developer/gitops-operator) which was deployed as part of the cluster setup. Normally this step would be done as part of the Operator Install so its a bit more complicated than we would like. Because _we did not know_ your team names ahead of time 👻 we will need to update an environment variable on the Operator Subscription. This tells the Operator its OK to deploy a cluster scoped ArgoCD instance into your <TEAM_NAME>-ci-cd project. Run this shell script:
 
     <p class="tip">
-    🐌 THIS IS NOT GITOPS - Until we work out a better way to automate this. 🐎
+    🐌 THIS IS NOT GITOPS - Until we work out a better way to automate this. 🐎 If you see "...." in your terminal after you copy this shell script, do not worry. Hit return and it will run as designed.
     </p>
 
-    ```bash
+    ```bash#test
     run()
     {
-      NS=$(oc get subscription/openshift-gitops-operator -n openshift-operators \
+      NS=$(oc get subscriptions.operators.coreos.com/openshift-gitops-operator -n openshift-operators \
         -o jsonpath='{.spec.config.env[?(@.name=="ARGOCD_CLUSTER_CONFIG_NAMESPACES")].value}')
+      opp=
       if [ -z $NS ]; then
         NS="${TEAM_NAME}-ci-cd"
+        opp=add
       elif [[ "$NS" =~ .*"${TEAM_NAME}-ci-cd".* ]]; then
         echo "${TEAM_NAME}-ci-cd already added."
         return
       else
         NS="${TEAM_NAME}-ci-cd,${NS}"
+        opp=replace
       fi
-      oc -n openshift-operators patch subscription/openshift-gitops-operator --type=json \
-        -p '[{"op":"replace","path":"/spec/config/env/1","value":{"name": "ARGOCD_CLUSTER_CONFIG_NAMESPACES", "value":"'${NS}'"}}]'
-      echo "EnvVar set to: $(oc get subscription/openshift-gitops-operator -n openshift-operators \
+      oc -n openshift-operators patch subscriptions.operators.coreos.com/openshift-gitops-operator --type=json \
+        -p '[{"op":"'$opp'","path":"/spec/config/env/1","value":{"name": "ARGOCD_CLUSTER_CONFIG_NAMESPACES", "value":"'${NS}'"}}]'
+      echo "EnvVar set to: $(oc get subscriptions.operators.coreos.com/openshift-gitops-operator -n openshift-operators \
         -o jsonpath='{.spec.config.env[?(@.name=="ARGOCD_CLUSTER_CONFIG_NAMESPACES")].value}')"
     }
     run
@@ -56,7 +59,7 @@ When something is seen as not matching the required state in Git, an application
     The output should look something like this with other teams appended as well:
     <div class="highlight" style="background: #f7f7f7">
     <pre><code class="language-bash">
-      subscription.operators.coreos.com/openshift-gitops-operator patched
+      subscriptions.operators.coreos.com/openshift-gitops-operator patched
       EnvVar set to: <TEAM_NAME>-ci-cd,anotherteam-ci-cd
     </code></pre></div>
 
@@ -66,15 +69,15 @@ When something is seen as not matching the required state in Git, an application
 
     Configure our ArgoCD instance with a secret in our <TEAM_NAME>-ci-cd namespace by creating a small bit of yaml 😋:
 
-    ```bash
+    ```bash#test
     cat << EOF > /projects/tech-exercise/argocd-values.yaml
     ignoreHelmHooks: true
     operator: []
     namespaces:
       - ${TEAM_NAME}-ci-cd
     argocd_cr:
-      repositoryCredentials: |
-        - url: https://${GIT_SERVER}
+      initialRepositories: |
+        - url: https://${GIT_SERVER}/${TEAM_NAME}/tech-exercise.git
           type: git
           passwordSecret:
             key: password
@@ -82,12 +85,13 @@ When something is seen as not matching the required state in Git, an application
           usernameSecret:
             key: username
             name: git-auth
-    EOF
+          insecure: true
+EOF
     ```
 
     Then, deploy ArgoCD using helm and this piece of yaml:
 
-    ```bash
+    ```bash#test
     helm upgrade --install argocd \
       --namespace ${TEAM_NAME}-ci-cd \
       -f /projects/tech-exercise/argocd-values.yaml \
@@ -98,7 +102,7 @@ When something is seen as not matching the required state in Git, an application
     ⛷️ <b>NOTE</b> ⛷️ - It's also worth noting we're allowing ArgoCD to run in a fairly permissive mode for these exercise, it can pull charts from anywhere. If you're interested in securing ArgoCD a bit more, checkout the <span style="color:blue;"><a href="/#/1-the-manual-menace/666-here-be-dragons?id=here-be-dragons">here-be-dragons</a></span> exercise at the end of this lab.
     </p>
 
-3. If we check in OpenShift we should see the Operator pod coming to life and (eventually) the argocd-server, dex and other pods spin up.
+3. If we check in OpenShift we should see the Operator pod coming to life and (eventually) the argocd-server, dex and other pods spin up. To do this, we are going to run a command with a 'watch' flag to continuousy monitor pod creation.
 
     ```bash
     oc get pods -w -n ${TEAM_NAME}-ci-cd
@@ -106,12 +110,12 @@ When something is seen as not matching the required state in Git, an application
 
     ![argocd-pods](images/argocd-pods.png)
 
-    *You can do Control+C to break the 'watch' mode*
+    *You must do Control+C to break the 'watch' mode to continue to the next step. Once all your pods are running*
 
 4. When all the pods are up and running, we can login to the UI of ArgoCD. Get the route and open it in a new browser tab.
 
-    ```bash
-    echo https://$(oc get route argocd-server --template='{{ .spec.host }}' -n ${TEAM_NAME}-ci-cd)  
+    ```bash#test
+    echo https://$(oc get route argocd-server --template='{{ .spec.host }}' -n ${TEAM_NAME}-ci-cd)
     ```
 
     ![argocd-route](./images/argocd-route.png)
@@ -131,10 +135,12 @@ When something is seen as not matching the required state in Git, an application
       * Repository URL: `https://rht-labs.com/todolist/`
       * Select `Helm` from the right drop down menu
       * Chart: `todolist`
-      * Version: `1.0.1` 
+      * Version: `1.1.0`
    * On the "DESTINATION" box
       * Cluster URL: `https://kubernetes.default.svc`
       * Namespace: `<TEAM_NAME>-ci-cd`
+   * On the "HELM" box
+      * Values Files: `values.yaml`
 
     Your form should look like this:
     ![argocd-create-application](images/argocd-create-application.png)

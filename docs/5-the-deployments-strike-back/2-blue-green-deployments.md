@@ -2,11 +2,11 @@
 
 > Blue/Green deployments involve running two versions of an application at the same time and moving the traffic from the old version to the new version. Blue/Green deployments make switching between two different versions very easy.
 
-<span style="color:blue;">[OpenShift Docs](https://docs.openshift.com/container-platform/4.9/applications/deployments/route-based-deployment-strategies.html#deployments-blue-green_route-based-deployment-strategies)</span> is pretty good at showing an example of how to do a manual Blue/Green deployment. But in the real world you'll want to automate this switching of the active routes based on some test or other metric. Plus this is GITOPS! So how do we do a Blue/Green with all of this automation and new tech, let's take a look with our Pet Battle UI!
+<span style="color:blue;">[OpenShift Docs](https://docs.openshift.com/container-platform/4.12/applications/deployments/route-based-deployment-strategies.html#deployments-blue-green_route-based-deployment-strategies)</span> is pretty good at showing an example of how to do a manual Blue/Green deployment. But in the real world you'll want to automate this switching of the active routes based on some test or other metric. Plus this is GITOPS! So how do we do a Blue/Green with all of this automation and new tech, let's take a look with our Pet Battle UI!
 
 ![blue-green-diagram](images/blue-green-diagram.jpg)
 
-1. Let's create two new deployments in our ArgoCD Repo for the pet-battle front end. We'll call one Blue and the other Green. Add 2 new application in `tech-exercise/pet-battle/test/values.yaml`.
+1. Let's create two new deployments in our ArgoCD Repo for the pet-battle front end. We'll call one Blue and the other Green. Add 2 new application in `tech-exercise/pet-battle/test/values.yaml`. Adjust the `source_ref` helm chart version and `image_version` to match what you have built.
 
     ```bash
     cat << EOF >> /projects/tech-exercise/pet-battle/test/values.yaml
@@ -16,9 +16,9 @@
         enabled: true
         source: http://nexus:8081/repository/helm-charts
         chart_name: pet-battle
-        source_ref: 1.1.0 # helm chart version
+        source_ref: 1.0.6 # helm chart version - may need adjusting!
         values:
-          image_version: latest # container image version
+          image_version: latest # container image version - may need adjusting!
           fullnameOverride: blue-pet-battle
           blue_green: active
           # we controll the prod route via the "blue" chart for simplicity
@@ -43,9 +43,9 @@
         enabled: true
         source: http://nexus:8081/repository/helm-charts
         chart_name: pet-battle
-        source_ref: 1.1.0 # helm chart version
+        source_ref: 1.0.6 # helm chart version - may need adjusting!
         values:
-          image_version: latest # container image version
+          image_version: latest # container image version - may need adjusting!
           fullnameOverride: green-pet-battle
           blue_green: inactive
           config_map: '{
@@ -89,6 +89,9 @@
       agent {
         label "jenkins-agent-argocd"
       }
+      options {
+         skipDefaultCheckout(true)
+      }
       steps {
         echo '### set env to test against ###'
         sh '''
@@ -115,7 +118,7 @@
           #🌻 3. do some kind of verification of the deployment  
           sleep 10
           echo "🪞💨 TODO - some kinda test to validate blue or green is working as expected ... 🪞💨"
-          curl -L -f $(oc get route --no-headers ${INACTIVE//_/-} -n $DESTINATION_NAMESPACE | cut -d' ' -f 4) 
+          curl -k -L -f $(oc get route --no-headers ${INACTIVE//_/-} -n $DESTINATION_NAMESPACE | cut -d' ' -f 4) 
 
           #🌻 4. If "tests" have passed swap inactive to active to and vice versa
           yq eval -i .applications.\\"${INACTIVE}\\".values.blue_green=\\"active\\" "${ARGOCD_CONFIG_REPO_PATH}"
@@ -134,7 +137,7 @@
     }
     ```
 
-5. Before we commit the changes to the Jenkinsfile, let's make a simple application change to make this more visual. In the frontend, we'll change the banner along the top of the app. In your IDE, open `pet-battle/src/app/shell/header/header.component.html`. Uncomment the `<nav>` under the `<!-- PB - Purple -->` comment and remove the line above it so it appears like this:
+5. Before we commit the changes to the `Jenkinsfile`, let's make a simple application change to make this more visual. In the frontend, we'll change the banner along the top of the app. In your IDE, open `pet-battle/src/app/shell/header/header.component.html`. Uncomment the `<nav>` under the `<!-- PB - Purple -->` comment and remove the line above it so it appears like this:
 
     ```html
     <header>
@@ -163,4 +166,18 @@
 
 8. When Jenkins executes, you should see things progress and the blue green deployment happen automatically.
 
-    This is a simple example to show how we can automate a blue green deployment using gitops. However, we did not remove the previous deployment of pet-battle, in the real world we would do this.
+    The version in production is now the new `1.6.1` published with the latest change. As you can check from the
+    nav bar of the application from the production route `prod-pet-battle` (linked to the `green` service):
+
+    ![prod-pet-battle](images/bg-prod-pet-battle.png)
+
+    The previous `1.2.0` version, now identified as `blue`, is already available from the blue route `blue-pet-battle`:
+
+    ![blue-pet-battle](images/bg-blue-pet-battle.png)
+
+    Every time you change the `version` variable in the `package.json` file the blue and green version will switch. Try it
+    publishing a new version of the application, e.g: `1.6.2`. Which one is in production? Which is `blue`? Which is `green`?
+
+    This is a simple example to show how we can automate a blue green deployment using GitOps. However, we did not remove the
+    previous deployment of pet-battle, in the real world we would do this.
+

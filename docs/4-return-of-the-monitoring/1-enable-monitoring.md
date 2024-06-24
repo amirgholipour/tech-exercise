@@ -6,7 +6,7 @@
 
 > Out of the box monitoring in OpenShift - this gives us the Kubernetes metrics for our apps such as Memory usage & CPU etc.
 
-1. To enable the User Workload Monitoring, a one line change has to be made to a config map. This is cluster wide so it's already been done for you, but if you're interested how the <span style="color:blue;">[docs are here](https://docs.openshift.com/container-platform/4.9/monitoring/enabling-monitoring-for-user-defined-projects.html#enabling-monitoring-for-user-defined-projects_enabling-monitoring-for-user-defined-projects).</span>
+1. To enable the User Workload Monitoring, a one line change has to be made to a config map. This is cluster wide so it's already been done for you, but if you're interested how the <span style="color:blue;">[docs are here](https://docs.openshift.com/container-platform/4.12/monitoring/enabling-monitoring-for-user-defined-projects.html).</span>
 
     On the OpenShift UI, go to *Observe*, it should show basic health indicators
 
@@ -49,7 +49,7 @@
 
     Now, let's create add the `ServiceMonitor` for our PetBattle apps! Of course, we will do it through Helm and ArgoCD because this is GITOPS!!
 
-    Our Helm Chart for pet-battle api Open up `pet-battle/test/values.yaml` and `pet-battle/stage/values.yaml` files. Update `values` for `pet-battle-api` with adding following:
+    Our Helm Chart for pet-battle api Open up `tech-exercise/pet-battle/test/values.yaml` and `tech-exercise/pet-battle/stage/values.yaml` files. Update `values` for `pet-battle-api` with adding following:
 
     ```yaml
           servicemonitor: true
@@ -58,7 +58,7 @@
     Then push it to the git repo.
 
     ```bash
-    cd /projects/tech-exercises
+    cd /projects/tech-exercise
     git add .
     git commit -m "🖥️ ServiceMonitor enabled 🖥️"
     git push
@@ -93,7 +93,7 @@
 
     ```bash
     # get the route and open it in your browser
-    echo https://$(oc get route grafana-route --template='{{ .spec.host }}' -n ${TEAM_NAME}-ci-cd)
+    echo https://$(oc get route pb-grafana-route --template='{{ .spec.host }}' -n ${TEAM_NAME}-ci-cd)
     ```
 
     If you use `Log in with OpenShift` to login and display dashboards - you user will only have `view` role which is read-only. This is alright in most cases, but we want to be able to edit and admin the boards.
@@ -101,12 +101,12 @@
 5. The Dashboards should be showing some basic information and we can generate more data by firing some requests to the `pet-battle-api`. In your IDE, run on your terminal:
 
     ```bash
-    curl -vL $(oc get route/pet-battle-api -n ${TEAM_NAME}-test --template='{{.spec.host}}')/dogs
-    curl -vL -X POST -d '{"OK":"🐈"}' $(oc get route/pet-battle-api -n <TEAM_NAME>-test --template='{{.spec.host}}')/cats/
-    curl -vL $(oc get route/pet-battle-api -n ${TEAM_NAME}-test --template='{{.spec.host}}')/api/dogs
-    curl -vL -X POST -d '{"OK":"🦆"}' $(oc get route/pet-battle-api -n <TEAM_NAME>-test --template='{{.spec.host}}')/cats/
-    curl -vL $(oc get route/pet-battle-api -n ${TEAM_NAME}-test --template='{{.spec.host}}')/api/dogs
-    curl -vL -X POST -d '{"OK":"🐶"}' $(oc get route/pet-battle-api -n <TEAM_NAME>-test --template='{{.spec.host}}')/cats/
+    curl -vkL $(oc get route/pet-battle-api -n ${TEAM_NAME}-test --template='{{.spec.host}}')/dogs
+    curl -vkL -X POST -d '{"OK":"🐈"}' $(oc get route/pet-battle-api -n <TEAM_NAME>-test --template='{{.spec.host}}')/cats/
+    curl -vkL $(oc get route/pet-battle-api -n ${TEAM_NAME}-test --template='{{.spec.host}}')/api/dogs
+    curl -vkL -X POST -d '{"OK":"🦆"}' $(oc get route/pet-battle-api -n <TEAM_NAME>-test --template='{{.spec.host}}')/cats/
+    curl -vkL $(oc get route/pet-battle-api -n ${TEAM_NAME}-test --template='{{.spec.host}}')/api/dogs
+    curl -vkL -X POST -d '{"OK":"🐶"}' $(oc get route/pet-battle-api -n <TEAM_NAME>-test --template='{{.spec.host}}')/cats/
     ```
 
 6. Back in Grafana, we should see some data populated into the `4xx` and `5xx` boards...

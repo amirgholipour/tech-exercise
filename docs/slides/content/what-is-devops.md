@@ -5,6 +5,7 @@ TL500 <!-- {.element: class="title-color"} -->
 
 
 
+#### _Choose one of the two exercises that you like most :)_
 ## Exercise - DevOps is...
 _Complete the sentence "DevOps is..."_
 1. Everyone grab one sticky note.
@@ -14,46 +15,69 @@ come to mind.
 
 
 
+## Exercise - What is DevOps?
+* Create a 3 x 3 table on a paper sheet.
+* Fill each of your nine squares with a term, phrase, or idea related to DevOps.
+* Yell out "Bingo!!!" when you match a row up, down, or diagonal during this presentation.
+
+![devops-bingo](images/what-is-devops/devops-bingo.png)<!-- {.element: class="" style="height:450px"} -->
+
+
+
 <!--.slide: id="dev-ops" -->
 ## DevOps Culture and Practice
 
 
 
-<!-- .slide: data-transition="slide-in fade-out" -->
-## What is DevOps?
+<div class="r-stack">
+  <div class="fragment fade-out" data-fragment-index="0" >
+    <p style="position: absolute; left:0; bottom: 0; width:100%; font-size:80%"> Happy customers - The ultimate goal of organizations</p>
+    <img src="images/what-is-devops/devops-story-1.jpg">
+  </div>
+  <div class="fragment fade-in-then-out" data-fragment-index="0" >
+    <p style="position: absolute; left:0; bottom: 0; width:95%; text-align: center; font-size:80%"> Profit - A common goal of every commercial organization</p>
+    <img src="images/what-is-devops/devops-story-2.jpg">
+  </div>
+  <div class="fragment fade-in-then-out" data-fragment-index="2" >
+    <p style="position: absolute; left:0; bottom: 0; width:95%; text-align: center; font-size:80%">Customers dreaming of the pot of gold</p>
+    <img src="images/what-is-devops/devops-story-3.jpg">
+  </div>
+  <div class="fragment fade-in-then-out" data-fragment-index="3" >
+    <p style="position: absolute; left:0; bottom: 0; width:95%; text-align: center; font-size:80%"> First Gap - Understanding and collecting customer requirements</p>
+    <img src="images/what-is-devops/devops-story-4.jpg">
+  </div>
+  <div class="fragment fade-in-then-out" data-fragment-index="4" >
+    <p style="position: absolute; left:0; bottom: 0; width:95%; text-align: center; font-size:80%">Using human-centered practices to understand customer needs</p>
+    <img src="images/what-is-devops/devops-story-5.jpg">
+  </div>
+  <div class="fragment fade-in-then-out" data-fragment-index="5" >
+    <p style="position: absolute; left:0; bottom: 0; width:95%; text-align: center; font-size:80%">Second Gap - Traditional deliverables with its drawbacks failed to achieve customer satisfaction</p>
+    <img src="images/what-is-devops/devops-story-6.jpg">
+  </div>
+  <div class="fragment fade-in-then-out" data-fragment-index="6" >
+    <p style="position: absolute; left:0; bottom: 0; width:95%; text-align: center; font-size:80%"> Implementation of DevOps practices leading to faster and better products</p>
+    <img src="images/what-is-devops/devops-story-7.jpg">
+  </div>
+  <div class="fragment fade-in-then-out" data-fragment-index="7" >
+    <p style="position: absolute; left:0; bottom: 0; width:95%; text-align: center; font-size:80%">Plugging the gaps in the software delivery process</p>
+    <img src="images/what-is-devops/devops-story-8.jpg">
+  </div>
+</div>
 
-                              Culture?                       Agile?
-
-                                          Pipelines?
-                      Automation?                                          Mindset?
-                                      A Role?
-                                                       CI/CD?
-                                                                  Dev & Ops?
-                              Tools?
-                                            Way of Working?
-
-
-
-<!-- .slide: data-transition="fade-in slide-out" -->
-## DevOps is...
-
-                              Culture
-
-                                                                           Mindset
-
-                                            Way of Working
 
 
 
 ### The Three Ways of DevOps
 #### _The DevOps Handbook_
 #### by Gene Kim, et. al.
-![DevOps Handbook](images/devops/devopshandbook.jpg)
+![DevOps Handbook](images/what-is-devops/devopshandbook.jpg)
+
 
 
 
 ### The Three Ways of DevOps
-#### _The First Way: Systems Thinking_
+![first-way](images/what-is-devops/first-way.png)<!-- .element: class="image-no-shadow image-full-width " -->
+
 The First Way emphasizes the performance of the entire system, as opposed to the performance of a specific silo of work or department. This can be as large as a division or as small as an individual contributor. <!-- {.element: class="medium para"} -->
 
 _The DevOps Handbook_ <!-- {.element: class="small" style="text-align: right;"} -->
@@ -61,7 +85,7 @@ _The DevOps Handbook_ <!-- {.element: class="small" style="text-align: right;"} 
 
 
 ### The Three Ways of DevOps
-#### _The Second Way: Amplify Feedback Loops_
+![second-way](images/what-is-devops/second-way.png)<!-- .element: class="image-no-shadow image-full-width " -->
 * The Second Way is about creating more frequent feedback loops.
 
 * The goal of almost any process improvement initiative is to shorten and amplify feedback loops so necessary corrections can be continually made.
@@ -76,7 +100,7 @@ _The DevOps Handbook_ <!-- {.element: class="small" style="text-align: right;"} 
 
 
 ### The Three Ways of DevOps
-#### _The Third Way: Culture of Continual Experimentation and Learning_
+![third-way](images/what-is-devops/third-way.png)<!-- .element: class="image-no-shadow image-full-width " -->
 * The Third Way is about creating a culture that fosters two things:
   * Continual experimentation, taking risks and learning from failure
   * Understanding that repetition and practice is the prerequisite to mastery
@@ -92,8 +116,13 @@ _The DevOps Handbook_ <!-- {.element: class="small" style="text-align: right;"} 
 
 
 
+
+![ways-of-devops](images/what-is-devops/ways-of-devops.png)<!-- .element: class="image-no-shadow image-full-width " -->
+
+
+
 ### DevOps as It Relates to Agile
-![Feedback Loop](images/DevOps/feedbackloop.png)
+![Feedback Loop](images/what-is-devops/feedback-loop.png)
 
 
 
@@ -107,69 +136,13 @@ _The DevOps Handbook_ <!-- {.element: class="small" style="text-align: right;"} 
 
 
 
-### DevOps Anti-Patterns
-#### _Throw it over the wall_
-![ThrowItOverWall](images/DevOps/antiA.png)
-https://web.devopstopologies.com/ <!-- {.element: class="small"} -->
-
-
-
-### DevOps Anti-Patterns
-#### _DevOps Team Silo_
-![DevOpsTeamSilo](images/DevOps/antiB.png)
-https://web.devopstopologies.com/ <!-- {.element: class="small"} -->
-
-
-
-### DevOps Anti-Patterns
-#### _Dev Doesn't Need Ops_
-![NoNeedOps](images/DevOps/antiC.png)
-https://web.devopstopologies.com/ <!-- {.element: class="small"} -->
-
-
-
-### DevOps Anti-Patterns
-#### _DevOps as Tool Team_
-![DevOpsToolTeam](images/DevOps/antiD.png)
-https://web.devopstopologies.com/ <!-- {.element: class="small"} -->
-
-
-
-### DevOps Anti-Patterns
-#### _Re-branded Sys Admin_
-![RebrandSysAdmin](images/DevOps/antiE.png)
-https://web.devopstopologies.com/ <!-- {.element: class="small"} -->
-
-
-
-### DevOps Anti-Patterns
-#### _Ops Embedded in Dev Team_
-![EmbeddedOps](images/DevOps/antiF.png)
-https://web.devopstopologies.com/ <!-- {.element: class="small"} -->
-
-
-
-### DevOps Anti-Patterns
-#### _Dev and DBA Silos_
-![DevOpsDBASilo](images/DevOps/antiG.png)
-https://web.devopstopologies.com/ <!-- {.element: class="small"} -->
-
-
-
-### DevOps Success
-#### _Fully Shared Ops Responsibilities_
-![DevOpsSuccess](images/DevOps/dosuccess.png)
-https://web.devopstopologies.com/ <!-- {.element: class="small"} -->
-
-
-
 ### Summary
 #### _Defining DevOps_
 "I know it when I see it."
 
 
 
-<!-- .slide: data-background-image="images/chef-background.png", class="white-style" -->
+<!-- .slide: data-background-image="images/book-background.jpeg", class="black-style"  data-background-opacity="0.3" -->
 ### Related & Used Practices
 - [Continuous Integration](https://openpracticelibrary.com/practice/continuous-integration/)
 - [Continuous Delivery](https://openpracticelibrary.com/practice/continuous-delivery/)

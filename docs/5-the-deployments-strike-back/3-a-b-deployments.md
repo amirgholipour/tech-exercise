@@ -2,7 +2,7 @@
 
 > A/B deployments generally imply running two (or more) versions of the application at the same time for testing or experimentation purposes.
 
-<span style="color:blue;">[OpenShift Docs](https://docs.openshift.com/container-platform/4.9/applications/deployments/route-based-deployment-strategies.html#deployments-ab-testing_route-based-deployment-strategies)</span> is pretty good at showing an example of how to do a manual A/B deployment. But in the real world you'll want to automate this by increasing the load of the alternative service based on some tests or other metric. Plus this is GITOPS! So how do we do a A/B with all of this automation and new tech, let's take a look with our Pet Battle UI!
+<span style="color:blue;">[OpenShift Docs](https://docs.openshift.com/container-platform/4.12/applications/deployments/route-based-deployment-strategies.html#deployments-ab-testing_route-based-deployment-strategies)</span> is pretty good at showing an example of how to do a manual A/B deployment. But in the real world you'll want to automate this by increasing the load of the alternative service based on some tests or other metric. Plus this is GITOPS! So how do we do a A/B with all of this automation and new tech, let's take a look with our Pet Battle UI!
 
 ![a-b-diagram](images/a-b-diagram.jpg)
 
@@ -57,12 +57,11 @@ Before we jumping to A/B deployment, let's deploy Matomo through Argo CD.
 
     ```yaml
       # Matomo
-      - matomo:
-          name: matomo
-          enabled: true
-          source: https://petbattle.github.io/helm-charts
-          chart_name: matomo
-          source_ref: "4.1.1+01"
+      - name: matomo
+        enabled: true
+        source: https://petbattle.github.io/helm-charts
+        chart_name: matomo
+        source_ref: "4.1.1+01"
     ```
 
     Push the changes:
@@ -93,7 +92,7 @@ Before we jumping to A/B deployment, let's deploy Matomo through Argo CD.
 
 ### A/B Deployment
 
-1. Let's deploy our experiment we want to compare -  let's call this `B` and we'll use our existing Pet Battle deployment as `A`.
+1. Let's deploy our experiment we want to compare -  let's call this `B`. Adjust the `source_ref` helm chart version and `image_version` to match what you have built.
 
     ```bash
     cat << EOF >> /projects/tech-exercise/pet-battle/test/values.yaml
@@ -103,9 +102,9 @@ Before we jumping to A/B deployment, let's deploy Matomo through Argo CD.
         enabled: true
         source: http://nexus:8081/repository/helm-charts
         chart_name: pet-battle
-        source_ref: 1.1.0 # helm chart version
+        source_ref: 1.0.6 # helm chart version - may need adjusting!
         values:
-          image_version: latest # container image version
+          image_version: latest # container image version - may need adjusting!
           fullnameOverride: pet-battle-b
           route: false
           config_map: '{
@@ -123,7 +122,9 @@ Before we jumping to A/B deployment, let's deploy Matomo through Argo CD.
     EOF
     ```
 
-2. Extend the cofiguration for the existing Pet Battle deployment (`A`) by adding the `a_b_deploy` properties to the `values` section. Copy the below lines under `pet-battle` application definition in `/projects/tech-exercise/pet-battle/test/values.yaml` file.
+    We will use our existing Pet Battle deployment as `A`.
+
+2. Extend the configuration for the existing Pet Battle deployment (`A`) by adding the `a_b_deploy` properties to the `values` section. Copy the below lines under `pet-battle` application definition in `/projects/tech-exercise/pet-battle/test/values.yaml` file.
 
     ```yaml
           a_b_deploy:
@@ -132,7 +133,7 @@ Before we jumping to A/B deployment, let's deploy Matomo through Argo CD.
             svc_name: pet-battle-b
     ```
 
-    The `pet-battle` definition in `test/values.yaml` should look something like this (the version numbers may be different):
+    The `pet-battle-a` definition in `test/values.yaml` should look something like this (the version numbers may be different):
 
     <div class="highlight" style="background: #f7f7f7">
     <pre><code class="language-yaml">
@@ -163,8 +164,8 @@ Before we jumping to A/B deployment, let's deploy Matomo through Argo CD.
 4. Verify if you have the both service definition.
 
     ```bash
-    oc get svc -l app.kubernetes.io/name=pet-battle -n ${TEAM_NAME}-test
-    oc get svc -l app.kubernetes.io/name=pet-battle-b -n ${TEAM_NAME}-test
+    oc get svc -l app.kubernetes.io/instance=pet-battle -n ${TEAM_NAME}-test
+    oc get svc -l app.kubernetes.io/instance=pet-battle-b -n ${TEAM_NAME}-test
     ```
 
 5. Before verify the traffic redirection, let's make a simple application change to make this more visual! In the frontend, we'll change the banner along the top of the app. In your IDE, open `/projects/pet-battle/src/app/shell/header/header.component.html`. Uncomment the `<nav>` HTML Tag under the `<!-- Green #009B00 -->`.
@@ -193,6 +194,7 @@ Before we jumping to A/B deployment, let's deploy Matomo through Argo CD.
     cd /projects/pet-battle
     git add .
     git commit -m "🫒 ADD - Green banner 🫒"
+    git push
     ```
 
 8. When Jenkins executes, it'll bump the version in ArgoCD configuration. ArgoCD triggers the new version deployment while `pet-battle-b` is still running in the previous version.
@@ -208,10 +210,10 @@ And as always, push it to the Git repository - <strong>Because if it's not in Gi
 
     ```bash
     cd /projects/tech-exercise
-    yq eval -i .applications.pet-battle-a.values.a_b_deploy.a_weight='100' pet-battle/test/values.yaml
-    yq eval -i .applications.pet-battle-a.values.a_b_deploy.b_weight='100' pet-battle/test/values.yaml
+    yq eval -i .applications.pet-battle.values.a_b_deploy.a_weight='100' pet-battle/test/values.yaml
+    yq eval -i .applications.pet-battle.values.a_b_deploy.b_weight='100' pet-battle/test/values.yaml
     git add pet-battle/test/values.yaml
-    git commit -m  "🏋️‍♂️ service B weight increased to 80 🏋️‍♂️"
+    git commit -m  "🏋️‍♂️ service B weight increased to 50% 🏋️‍♂️"
     git push
     ```
 
@@ -225,8 +227,8 @@ And as always, push it to the Git repository - <strong>Because if it's not in Gi
 
     ```bash
     cd /projects/tech-exercise
-    yq eval -i .applications.pet-battle-a.values.a_b_deploy.a_weight='100' pet-battle/test/values.yaml
-    yq eval -i .applications.pet-battle-a.values.a_b_deploy.b_weight='0' pet-battle/test/values.yaml
+    yq eval -i .applications.pet-battle.values.a_b_deploy.a_weight='100' pet-battle/test/values.yaml
+    yq eval -i .applications.pet-battle.values.a_b_deploy.b_weight='0' pet-battle/test/values.yaml
     git add pet-battle/test/values.yaml
     git commit -m  "💯 service B weight increased to 100 💯"
     git push

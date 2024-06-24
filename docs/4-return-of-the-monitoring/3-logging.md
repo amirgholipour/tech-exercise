@@ -1,6 +1,6 @@
 ## Aggregated Logging
 
-> OpenShift's built in logging .... Something something installed operator before hand. Very memory intensive, logging can be deployed to the infra plane though...
+> OpenShift's built in logging by default collects all output from all containers that are logging to system out. This means no logging needs to be configured explicitly in the application. Logs are collected using Vector collector or the legacy Fluentd collector then popped into Elastic (or LokiStack) where they are indexed in a timeseries as JSON. You can use a UI component to view a visual representation of your log data. The UI provides a graphical interface to search, query, and view stored logs. The OpenShift Container Platform web console UI is provided by enabling the OpenShift Container Platform console plugin. Or you can choose to use Kibana which the graphical tool on top of Elastic to run queries and search the logs.
 
 1. Observe logs from any given container:
 
@@ -27,16 +27,16 @@
 
     ![kibana-create-index-timestamp](./images/kibana-create-index-timestamp.png)
 
-6. Go to the Kibana Dashboard - Hit `Discover` in the top right hand corner, we should now see all logs across all pods. It's a lot of information but we can query it easily.
+6. Go to the Kibana Dashboard - Hit `Discover` in the top left hand corner, we should now see all logs across all pods. It's a lot of information but we can query it easily.
 
     ![kibana-discover](./images/kibana-discover.png)
 
-7. Let's filter the information, look for the logs specifically for pet-battle apps running in the test nameaspace by addint this to the query bar:
+7. Let's filter the information, look for the logs specifically for pet-battle apps running in the test nameaspace by adding this to the query bar:
 `kubernetes.namespace_name="<TEAM_NAME>-test" AND kubernetes.container_name=pet-battle-.*`
 
     ![kibana-example-query](./images/kibana-example-query.png)
 
-8. Container logs are ephemeral, so once they die you'd loose them unless they're aggregated and stored somewhere. Let's generate some messages and query them from the UI in Kibana. Connect to pod via rsg and generate logs.
+8. Container logs are ephemeral, so once they die you'd loose them unless they're aggregated and stored somewhere. Let's generate some messages and query them from the UI in Kibana. Connect to pod via rsh and generate logs.
 
     ```bash
     oc project ${TEAM_NAME}-test

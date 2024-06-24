@@ -23,7 +23,7 @@
     npm run lint:fix
     ```
 
-4. Now let's add the linter to the pipeline so on every build it checks our style, extend the `stage{ "Build" }` of the `Jenkinsfile` with the lint task...
+4. Now let's add the linter to the pipeline so on every build it checks our style, extend the `stage{ "Build" }` of the `Jenkinsfile` with the lint task.
 
     ```groovy
                     //💅 Lint exercise here
@@ -31,9 +31,10 @@
                     sh 'npm run lint'
     ```
 
-5. Push our changes to the repo to trigger a new build
+5. Push our changes to the repo to trigger a new build.
 
-    ```
+    ```bash
+    cd /projects/pet-battle
     git add .
     git commit -m "💅 ADD - linting to the pipeline 💅"
     git push

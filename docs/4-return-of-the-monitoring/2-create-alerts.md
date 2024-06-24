@@ -1,6 +1,7 @@
 ## Alerting and Notifications
 
-> OpenShift's built in alerts.... blah
+> OpenShift has alerting and metric gathering built into the platform using the prometheus stack. It collects all the information from each node in the cluster to give overall health of things like memory and disk usage. To enable user workload monitoring a small change needs to be made to the operator. With this in place, app dev teams can hook into the built in monitoring stack by placing a `ServiceMonitor` Custom Resource with a reference to where the prometheus endpoints
+
 ### Platform Alerts
 
 1. The Pet Battle API and UI charts both have one basic `rule` for firing off an alert. If you open up the `/projects/pet-battle-api/chart/templates/prometheusrule.yaml` you'll see one configured to alert when a pod is not available for one minute. The alert rules are written in PromQL.
@@ -48,17 +49,19 @@
     EOF
     ```
 
-4. Open up `Chart.yaml` and bump the version because you just edited a template within helm chart.
+4. We can now trigger the Pipeline with the new version. Edit pet-battle-api `pom.xml` found in the root of the `pet-battle-api` project and update the `version` number. The pipeline will update the `chart/Chart.yaml` with these versions for us. Increment and change the version number to suit.
 
-    <div class="highlight" style="background: #f7f7f7">
-    <pre><code class="language-yaml">
-    apiVersion: v2
-    name: pet-battle-api
-    description: Pet Battle API
-    type: application
-    version: 1.2.1 <- bump this
-    appVersion: 1.2.1
-    </code></pre></div>
+    ```xml
+        <artifactId>pet-battle-api</artifactId>
+        <version>1.3.3</version>
+    ```
+
+    You can also run this bit of code to do the replacement if you are feeling uber lazy!
+
+    ```bash#test
+    cd /projects/pet-battle-api
+    mvn -ntp versions:set -DnewVersion=1.3.3
+    ```
 
 5. Now push the changes into the repo:
 
@@ -93,3 +96,7 @@
     50+0 records out
     524288000 bytes (524 MB) copied, 11.2603 s, 46.6 MB/s
     </code></pre></div>
+
+7. Observe the alert is firing on OpenShift UI. In Developer view, go to Observe > Alerts. Make sure you select the right project from the drop down menu. You should see ` PetBattleMongoDBDiskUsage` alert as below:
+
+    ![alert-mongodb](./images/alert-mongodb.png)
